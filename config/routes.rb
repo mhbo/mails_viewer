@@ -1,10 +1,10 @@
 MailsViewer::Engine.routes.draw do
   controller "home" do
-    get "/index", to: :index
-    get "/raw", to: :raw
-    get "/html", to: :html
-    get "/plain", to: :plain
-    get '/attachment', to: :attachment
+    get "/index" => :index
+    get "/raw" =>  :raw
+    get "/html" =>  :html
+    get "/plain" =>  :plain
+    get '/attachment' =>  :attachment
   end
   root to: 'home#index'
 end
