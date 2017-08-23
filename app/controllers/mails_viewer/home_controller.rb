@@ -1,8 +1,8 @@
 module MailsViewer
   class HomeController < ActionController::Base
     layout false
-    before_filter :disabled_on_production
-    before_filter :find_absolute_filename, only: [:raw, :html, :attachment, :plain]
+    before_action :disabled_on_production
+    before_action :find_absolute_filename, only: [:raw, :html, :attachment, :plain]
 
     def index
       if File.exist?(mails_path)
@@ -18,7 +18,7 @@ module MailsViewer
 
     def raw
       if @filename
-        render text: File.read(@filename)
+        render plain: File.read(@filename)
       else
         head :not_found
       end
@@ -28,7 +28,7 @@ module MailsViewer
       if @filename
         mail = Mail.read(@filename)
         body = mail.html_part ? mail.html_part.body : mail.body
-        render text: body
+        render html: body.to_s.html_safe
       else
         head :not_found
       end
